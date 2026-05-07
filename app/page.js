@@ -200,7 +200,7 @@ function Header({ siteId, onSiteChange, clock, site }) {
       <div className="flex items-center gap-3">
         <div className="relative h-10 w-10 shrink-0">
           <Image
-            src="/buima-logo.svg"
+            src="/buima-logo.png"
             alt="Buima Energy"
             fill
             sizes="40px"
