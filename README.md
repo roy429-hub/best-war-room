@@ -1,36 +1,42 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# B.E.S.T. War Room
 
-## Getting Started
+Single-page command-center dashboard for **B.E.S.T. (Buima Energy Storage Tile)** — a live demo UI built for wall-mounted operations displays.
 
-First, run the development server:
+Real-time KPIs, daily power-flow telemetry, aggregate State-of-Charge, VPP dispatch status, per-site performance, and an alerts feed. All data is hardcoded for demo purposes; the site selector swaps the entire dashboard between the global aggregate and individual sites.
+
+## Stack
+
+- **Next.js 16** (App Router, Turbopack)
+- **React 19** with hooks
+- **Tailwind CSS v4**
+- **Recharts** for visualizations (ComposedChart, RadialBarChart)
+- **Lucide React** for iconography
+
+## Run locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Build
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm start
+```
 
-## Learn More
+## Project structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+app/
+├── layout.js      # Root layout, fonts, metadata
+├── globals.css    # Tailwind v4 entry, theme tokens
+└── page.js        # The entire war-room dashboard
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deploy
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Push this repo to GitHub and import it at https://vercel.com/new — Vercel auto-detects Next.js and ships in ~60 seconds. No environment variables required for the demo.
