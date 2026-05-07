@@ -17,3 +17,45 @@ body {
   color: var(--foreground);
   font-family: var(--font-geist-sans), system-ui, -apple-system, "Segoe UI", sans-serif;
 }
+
+/* Mapbox dark-theme overrides */
+.mapboxgl-popup-content {
+  background: rgba(2, 6, 23, 0.95) !important;
+  border: 1px solid rgba(34, 211, 238, 0.25) !important;
+  border-radius: 10px !important;
+  padding: 0 !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(34, 211, 238, 0.15) !important;
+  color: #e2e8f0 !important;
+  backdrop-filter: blur(8px);
+}
+.mapboxgl-popup-tip {
+  border-top-color: rgba(34, 211, 238, 0.4) !important;
+  border-bottom-color: rgba(34, 211, 238, 0.4) !important;
+}
+.mapboxgl-popup-close-button {
+  color: #94a3b8 !important;
+  font-size: 18px !important;
+  padding: 4px 8px !important;
+}
+.mapboxgl-ctrl-group {
+  background: rgba(15, 23, 42, 0.85) !important;
+  border: 1px solid rgba(51, 65, 85, 0.6) !important;
+}
+.mapboxgl-ctrl-group button {
+  background-color: transparent !important;
+}
+.mapboxgl-ctrl-group button:hover {
+  background-color: rgba(34, 211, 238, 0.15) !important;
+}
+.mapboxgl-ctrl-group button + button {
+  border-top: 1px solid rgba(51, 65, 85, 0.6) !important;
+}
+.mapboxgl-ctrl-group button .mapboxgl-ctrl-icon {
+  filter: invert(1) brightness(1.5);
+}
+.mapboxgl-ctrl-attrib {
+  background: rgba(2, 6, 23, 0.6) !important;
+}
+.mapboxgl-ctrl-attrib a {
+  color: #64748b !important;
+}
