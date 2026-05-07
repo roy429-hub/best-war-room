@@ -21,16 +21,16 @@ body {
 /* Mapbox dark-theme overrides */
 .mapboxgl-popup-content {
   background: rgba(2, 6, 23, 0.95) !important;
-  border: 1px solid rgba(34, 211, 238, 0.25) !important;
+  border: 1px solid rgba(220, 38, 38, 0.25) !important;
   border-radius: 10px !important;
   padding: 0 !important;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(34, 211, 238, 0.15) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 20px rgba(220, 38, 38, 0.15) !important;
   color: #e2e8f0 !important;
   backdrop-filter: blur(8px);
 }
 .mapboxgl-popup-tip {
-  border-top-color: rgba(34, 211, 238, 0.4) !important;
-  border-bottom-color: rgba(34, 211, 238, 0.4) !important;
+  border-top-color: rgba(220, 38, 38, 0.4) !important;
+  border-bottom-color: rgba(220, 38, 38, 0.4) !important;
 }
 .mapboxgl-popup-close-button {
   color: #94a3b8 !important;
@@ -45,7 +45,7 @@ body {
   background-color: transparent !important;
 }
 .mapboxgl-ctrl-group button:hover {
-  background-color: rgba(34, 211, 238, 0.15) !important;
+  background-color: rgba(220, 38, 38, 0.15) !important;
 }
 .mapboxgl-ctrl-group button + button {
   border-top: 1px solid rgba(51, 65, 85, 0.6) !important;

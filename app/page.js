@@ -15,11 +15,11 @@ import {
   RadialBar,
   PolarAngleAxis,
 } from "recharts";
+import Image from "next/image";
 import {
   Activity,
   AlertTriangle,
   BatteryCharging,
-  Bolt,
   CircleDot,
   Coins,
   Factory,
@@ -175,15 +175,15 @@ const fmt = {
 const STATUS = {
   DISCHARGING:    { label: "Discharging", text: "text-emerald-400", chip: "border-emerald-500/30 text-emerald-400 bg-emerald-500/5", marker: "#34d399", glow: "rgba(52,211,153,0.55)" },
   CHARGING:       { label: "Charging",    text: "text-blue-400",    chip: "border-blue-500/30 text-blue-400 bg-blue-500/5",          marker: "#60a5fa", glow: "rgba(96,165,250,0.55)" },
-  "VPP DISPATCH": { label: "VPP",         text: "text-cyan-400",    chip: "border-cyan-500/30 text-cyan-400 bg-cyan-500/5",          marker: "#22d3ee", glow: "rgba(34,211,238,0.65)" },
+  "VPP DISPATCH": { label: "VPP",         text: "text-red-500",    chip: "border-red-500/30 text-red-500 bg-red-500/5",          marker: "#dc2626", glow: "rgba(220,38,38,0.7)" },
   STANDBY:        { label: "Standby",     text: "text-slate-400",   chip: "border-white/10 text-slate-400 bg-white/[0.02]",          marker: "#94a3b8", glow: "rgba(148,163,184,0.45)" },
-  FAULT:          { label: "Fault",       text: "text-rose-400",    chip: "border-rose-500/30 text-rose-400 bg-rose-500/5",          marker: "#fb7185", glow: "rgba(251,113,133,0.65)" },
+  FAULT:          { label: "Fault",       text: "text-amber-400",   chip: "border-amber-500/30 text-amber-400 bg-amber-500/5",       marker: "#fbbf24", glow: "rgba(251,191,36,0.7)" },
 };
 
 const ALERT = {
   critical: { dot: "bg-rose-500",   text: "text-rose-300",  ring: "ring-rose-500/30",  icon: AlertTriangle },
   warning:  { dot: "bg-amber-400",  text: "text-amber-200", ring: "ring-amber-500/25", icon: AlertTriangle },
-  info:     { dot: "bg-cyan-400",   text: "text-cyan-200",  ring: "ring-cyan-500/25",  icon: Radio },
+  info:     { dot: "bg-red-500",   text: "text-red-300",  ring: "ring-red-500/25",  icon: Radio },
 };
 
 /* shared shells — keeps card chrome consistent */
@@ -198,12 +198,19 @@ function Header({ siteId, onSiteChange, clock, site }) {
   return (
     <header className="sticky top-0 z-20 flex flex-col gap-3 border-b border-white/[0.06] bg-black/85 px-6 py-4 backdrop-blur-md lg:flex-row lg:items-center lg:justify-between">
       <div className="flex items-center gap-3">
-        <div className="grid h-10 w-10 place-items-center rounded-lg border border-cyan-400/30 bg-cyan-500/10 text-cyan-400">
-          <Bolt className="h-5 w-5" />
+        <div className="relative h-10 w-10 shrink-0">
+          <Image
+            src="/buima-logo.svg"
+            alt="Buima Energy"
+            fill
+            sizes="40px"
+            className="object-contain"
+            priority
+          />
         </div>
         <div>
           <h1 className="text-base font-semibold tracking-tight text-white lg:text-lg">
-            B.E.S.T. <span className="text-cyan-400">Command Center</span>
+            B.E.S.T. <span className="text-red-500">Command Center</span>
           </h1>
           <p className="text-[10px] uppercase tracking-[0.28em] text-slate-500">
             Buima Energy Storage Tile · War Room
@@ -211,9 +218,9 @@ function Header({ siteId, onSiteChange, clock, site }) {
         </div>
 
         {siteId !== "global" && (
-          <div className="ml-3 hidden items-center gap-2 rounded-md border border-cyan-400/20 bg-cyan-500/5 px-2.5 py-1 lg:flex">
-            <span className="font-mono text-[10px] text-cyan-400">{site.cc}</span>
-            <span className="h-3 w-px bg-cyan-400/30" />
+          <div className="ml-3 hidden items-center gap-2 rounded-md border border-red-500/20 bg-red-500/5 px-2.5 py-1 lg:flex">
+            <span className="font-mono text-[10px] text-red-500">{site.cc}</span>
+            <span className="h-3 w-px bg-red-500/30" />
             <span className="text-xs text-white">{site.name}</span>
           </div>
         )}
@@ -230,7 +237,7 @@ function Header({ siteId, onSiteChange, clock, site }) {
           <button
             onClick={() => onSiteChange("global")}
             className={`flex items-center gap-1 rounded px-2 py-0.5 transition ${
-              siteId === "global" ? "bg-cyan-500/20 text-cyan-300" : "text-slate-400 hover:text-slate-200"
+              siteId === "global" ? "bg-red-500/20 text-red-400" : "text-slate-400 hover:text-slate-200"
             }`}
           >
             <Globe2 className="h-3.5 w-3.5" /> Global
@@ -239,7 +246,7 @@ function Header({ siteId, onSiteChange, clock, site }) {
           <select
             value={siteId === "global" ? "" : siteId}
             onChange={(e) => onSiteChange(e.target.value || "global")}
-            className="cursor-pointer rounded border border-transparent bg-transparent px-1.5 py-0.5 text-slate-200 outline-none hover:border-white/10 focus:border-cyan-400"
+            className="cursor-pointer rounded border border-transparent bg-transparent px-1.5 py-0.5 text-slate-200 outline-none hover:border-white/10 focus:border-red-500"
           >
             <option value="" className="bg-black">Specific Site…</option>
             {SITES_DATA.map((s) => (
@@ -299,7 +306,7 @@ function SitePopupCard({ site }) {
         </div>
         <div className="rounded border border-white/[0.06] bg-black/30 p-2">
           <p className="text-[9px] uppercase tracking-wider text-slate-500">SoC</p>
-          <p className="mt-0.5 font-mono text-base text-cyan-400">{site.soc}%</p>
+          <p className="mt-0.5 font-mono text-base text-red-500">{site.soc}%</p>
         </div>
         <div className="rounded border border-white/[0.06] bg-black/30 p-2">
           <p className="text-[9px] uppercase tracking-wider text-slate-500">Capacity</p>
@@ -310,7 +317,7 @@ function SitePopupCard({ site }) {
           <p className="mt-0.5 font-mono text-base text-emerald-400">{fmt.ntdCompact(site.kpi.earnings)}</p>
         </div>
       </div>
-      <p className="mt-2.5 text-center text-[10px] text-cyan-400/70">click marker to drill in →</p>
+      <p className="mt-2.5 text-center text-[10px] text-red-500/70">click marker to drill in →</p>
     </div>
   );
 }
@@ -360,7 +367,7 @@ function GlobalMap({ sites, selectedId, onSelect }) {
         )}
       </Map>
 
-      <div className="pointer-events-none absolute left-3 top-3 flex items-center gap-2 rounded-md border border-cyan-400/20 bg-black/70 px-2.5 py-1.5 text-[11px] font-medium text-cyan-300 backdrop-blur">
+      <div className="pointer-events-none absolute left-3 top-3 flex items-center gap-2 rounded-md border border-red-500/20 bg-black/70 px-2.5 py-1.5 text-[11px] font-medium text-red-400 backdrop-blur">
         <MapPin className="h-3 w-3" /> {sites.length} sites · {new Set(sites.map((s) => s.country)).size} countries
       </div>
 
@@ -394,7 +401,7 @@ function TotalsPanel() {
     return Object.values(map).sort((a, b) => b.earnings - a.earnings);
   }, []);
 
-  const gauge = [{ name: "soc", value: t.soc, fill: "#22d3ee" }];
+  const gauge = [{ name: "soc", value: t.soc, fill: "#dc2626" }];
 
   return (
     <div className={`flex h-full flex-col p-5 ${card}`}>
@@ -437,11 +444,11 @@ function TotalsPanel() {
               </RadialBarChart>
             </ResponsiveContainer>
             <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-              <span className="font-mono text-xl font-semibold text-white">{t.soc}<span className="text-xs text-cyan-400">%</span></span>
+              <span className="font-mono text-xl font-semibold text-white">{t.soc}<span className="text-xs text-red-500">%</span></span>
             </div>
           </div>
           <p className="mt-0.5 text-center text-[11px] text-slate-500">
-            <span className="font-mono text-cyan-400">{((t.bestCapacityMwh * t.soc) / 100).toFixed(1)}</span> /{" "}
+            <span className="font-mono text-red-500">{((t.bestCapacityMwh * t.soc) / 100).toFixed(1)}</span> /{" "}
             {t.bestCapacityMwh.toFixed(1)} MWh
           </p>
         </div>
@@ -449,14 +456,14 @@ function TotalsPanel() {
         {/* Active dispatch */}
         <div>
           <p className={sectionLabel}>Active Dispatch</p>
-          <p className="mt-2 font-mono text-3xl font-semibold tracking-tight text-cyan-400">
+          <p className="mt-2 font-mono text-3xl font-semibold tracking-tight text-red-500">
             +{t.activeVpp.power.toFixed(1)}<span className="ml-1 text-base text-slate-500">MW</span>
           </p>
           <p className="mt-1 text-[11px] text-slate-500">
             <span className="font-mono text-slate-300">{dispatchingSites}</span> of {SITES_DATA.length} sites
           </p>
           <div className="mt-2.5 h-1 overflow-hidden rounded-full bg-white/[0.04]">
-            <div className="h-full rounded-full bg-cyan-400" style={{ width: `${(dispatchingSites / SITES_DATA.length) * 100}%` }} />
+            <div className="h-full rounded-full bg-red-500" style={{ width: `${(dispatchingSites / SITES_DATA.length) * 100}%` }} />
           </div>
         </div>
       </div>
@@ -476,7 +483,7 @@ function TotalsPanel() {
                 </span>
                 <span className="text-sm text-slate-200">{c.name}</span>
                 <span className="ml-auto font-mono text-xs text-slate-500">{c.count}</span>
-                <span className="font-mono text-xs tabular-nums text-cyan-400 w-9 text-right">{pct.toFixed(0)}%</span>
+                <span className="font-mono text-xs tabular-nums text-red-500 w-9 text-right">{pct.toFixed(0)}%</span>
               </div>
             );
           })}
@@ -486,7 +493,7 @@ function TotalsPanel() {
       {/* Footer mini stats */}
       <div className="mt-auto grid grid-cols-3 gap-2 border-t border-white/[0.06] pt-4 text-center">
         <FootStat value={SITES_DATA.length} label="Sites" />
-        <FootStat value={dispatchingSites} label="Dispatching" tone="cyan" />
+        <FootStat value={dispatchingSites} label="Dispatching" tone="red" />
         <FootStat value={faultSites} label="Faults" tone={faultSites > 0 ? "rose" : "muted"} />
       </div>
     </div>
@@ -496,7 +503,7 @@ function TotalsPanel() {
 function FootStat({ value, label, tone = "muted" }) {
   const tones = {
     muted: "text-slate-300",
-    cyan: "text-cyan-400",
+    red: "text-red-500",
     rose: "text-rose-400",
   };
   return (
@@ -511,9 +518,9 @@ function FootStat({ value, label, tone = "muted" }) {
 /*  KPI ROW                                                                   */
 /* -------------------------------------------------------------------------- */
 
-function KpiCard({ icon: Icon, label, value, sub, accent = "cyan", trend }) {
+function KpiCard({ icon: Icon, label, value, sub, accent = "red", trend }) {
   const tones = {
-    cyan:    "text-cyan-400",
+    red:     "text-red-500",
     emerald: "text-emerald-400",
   };
   const trendUp = trend == null ? null : trend >= 0;
@@ -569,12 +576,12 @@ function PowerFlowChart({ data }) {
         <div>
           <p className={sectionLabel}>Daily Power Flow</p>
           <h2 className="mt-0.5 flex items-center gap-1.5 text-sm font-semibold tracking-tight text-white">
-            <Activity className="h-3.5 w-3.5 text-cyan-400" /> 24-Hour Telemetry
+            <Activity className="h-3.5 w-3.5 text-red-500" /> 24-Hour Telemetry
           </h2>
         </div>
         <div className="flex items-center gap-3 text-[11px] text-slate-400">
           <Legend color="#fbbf24" label="PV" />
-          <Legend color="#22d3ee" label="BESS Discharge" />
+          <Legend color="#dc2626" label="BESS Discharge" />
           <Legend color="#fb7185" label="Grid Import" dashed />
         </div>
       </div>
@@ -590,9 +597,9 @@ function PowerFlowChart({ data }) {
             <CartesianGrid strokeDasharray="3 6" stroke="rgba(255,255,255,0.05)" />
             <XAxis dataKey="hour" stroke="#475569" tick={{ fontSize: 10 }} interval={2} />
             <YAxis stroke="#475569" tick={{ fontSize: 10 }} />
-            <Tooltip content={<ChartTooltip />} cursor={{ fill: "rgba(34,211,238,0.05)" }} />
+            <Tooltip content={<ChartTooltip />} cursor={{ fill: "rgba(220,38,38,0.06)" }} />
             <Area type="monotone" dataKey="pv" name="PV" stroke="#fbbf24" strokeWidth={1.5} fill="url(#pvFill)" />
-            <Bar dataKey="bestDischarge" name="BESS Discharge" fill="#22d3ee" radius={[2, 2, 0, 0]} barSize={8} />
+            <Bar dataKey="bestDischarge" name="BESS Discharge" fill="#dc2626" radius={[2, 2, 0, 0]} barSize={8} />
             <Line type="monotone" dataKey="grid" name="Grid Import" stroke="#fb7185" strokeWidth={1.5} dot={false} strokeDasharray="3 3" />
           </ComposedChart>
         </ResponsiveContainer>
@@ -611,14 +618,14 @@ function Legend({ color, label, dashed }) {
 }
 
 function SoCDonut({ soc, capacity }) {
-  const data = [{ name: "soc", value: soc, fill: "#22d3ee" }];
+  const data = [{ name: "soc", value: soc, fill: "#dc2626" }];
   return (
     <div className={`p-5 ${card}`}>
       <div className="flex items-center justify-between">
         <div>
           <p className={sectionLabel}>State of Charge</p>
           <h2 className="mt-0.5 flex items-center gap-1.5 text-sm font-semibold tracking-tight text-white">
-            <BatteryCharging className="h-3.5 w-3.5 text-cyan-400" /> Storage Level
+            <BatteryCharging className="h-3.5 w-3.5 text-red-500" /> Storage Level
           </h2>
         </div>
       </div>
@@ -630,7 +637,7 @@ function SoCDonut({ soc, capacity }) {
           </RadialBarChart>
         </ResponsiveContainer>
         <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
-          <span className="font-mono text-3xl font-semibold tracking-tight text-white">{soc}<span className="text-base text-cyan-400">%</span></span>
+          <span className="font-mono text-3xl font-semibold tracking-tight text-white">{soc}<span className="text-base text-red-500">%</span></span>
           <span className="mt-0.5 text-[10px] uppercase tracking-wider text-slate-500">Healthy</span>
         </div>
       </div>
@@ -646,7 +653,7 @@ function MiniStat({ label, value, accent }) {
   return (
     <div className="rounded border border-white/[0.06] bg-white/[0.015] p-2">
       <p className="text-[10px] uppercase tracking-wider text-slate-500">{label}</p>
-      <p className={`mt-0.5 font-mono text-sm ${accent ? "text-cyan-400" : "text-white"}`}>{value}</p>
+      <p className={`mt-0.5 font-mono text-sm ${accent ? "text-red-500" : "text-white"}`}>{value}</p>
     </div>
   );
 }
@@ -659,7 +666,7 @@ function VppStatus({ vpp }) {
         <div>
           <p className={sectionLabel}>Virtual Power Plant</p>
           <h2 className="mt-0.5 flex items-center gap-1.5 text-sm font-semibold tracking-tight text-white">
-            <Radio className="h-3.5 w-3.5 text-cyan-400" /> Dispatch Status
+            <Radio className="h-3.5 w-3.5 text-red-500" /> Dispatch Status
           </h2>
         </div>
         <span className={`flex items-center gap-1.5 rounded-full border px-2 py-0.5 text-[10px] font-medium ${
@@ -692,7 +699,7 @@ function SiteTable({ sites, onSelect, selectedId }) {
     <div className={card}>
       <div className="flex items-center justify-between border-b border-white/[0.06] px-5 py-3">
         <div className="flex items-center gap-1.5">
-          <Factory className="h-3.5 w-3.5 text-cyan-400" />
+          <Factory className="h-3.5 w-3.5 text-red-500" />
           <p className={sectionLabel}>Site Performance</p>
         </div>
         <span className="text-[11px] text-slate-500">{sites.length} units</span>
@@ -716,7 +723,7 @@ function SiteTable({ sites, onSelect, selectedId }) {
                   key={s.id}
                   onClick={() => onSelect?.(s.id)}
                   className={`cursor-pointer border-t border-white/[0.04] transition hover:bg-white/[0.02] ${
-                    selectedId === s.id ? "bg-cyan-500/[0.05]" : ""
+                    selectedId === s.id ? "bg-red-500/[0.05]" : ""
                   }`}
                 >
                   <td className="px-5 py-3">
@@ -732,7 +739,7 @@ function SiteTable({ sites, onSelect, selectedId }) {
                   <td className="px-3 py-3 text-right">
                     <div className="ml-auto flex w-24 items-center gap-2">
                       <div className="h-1 flex-1 overflow-hidden rounded-full bg-white/[0.05]">
-                        <div className="h-full rounded-full bg-cyan-400" style={{ width: `${s.soc}%` }} />
+                        <div className="h-full rounded-full bg-red-500" style={{ width: `${s.soc}%` }} />
                       </div>
                       <span className="font-mono text-[11px] text-slate-300">{s.soc}%</span>
                     </div>
@@ -843,9 +850,9 @@ export default function BestWarRoom() {
         {/* KPI ROW */}
         <section className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
           <KpiCard icon={Coins} label="Aggregated Earnings" value={fmt.ntdCompact(site.kpi.earnings)} sub="Year to date" accent="emerald" trend={12.4} />
-          <KpiCard icon={Radio} label="VPP Revenue" value={fmt.ntdCompact(site.kpi.vppRevenue)} sub="Ancillary services" accent="cyan" trend={28.1} />
-          <KpiCard icon={Zap} label="Energy Savings" value={`${fmt.compact(site.kpi.savings)} kWh`} sub="Peak-shifted load" accent="cyan" trend={6.7} />
-          <KpiCard icon={Sun} label="PV Generation" value={`${fmt.compact(site.kpi.pvGeneration)} kWh`} sub="Solar harvested" accent="cyan" trend={-2.1} />
+          <KpiCard icon={Radio} label="VPP Revenue" value={fmt.ntdCompact(site.kpi.vppRevenue)} sub="Ancillary services" accent="red" trend={28.1} />
+          <KpiCard icon={Zap} label="Energy Savings" value={`${fmt.compact(site.kpi.savings)} kWh`} sub="Peak-shifted load" accent="red" trend={6.7} />
+          <KpiCard icon={Sun} label="PV Generation" value={`${fmt.compact(site.kpi.pvGeneration)} kWh`} sub="Solar harvested" accent="red" trend={-2.1} />
           <KpiCard icon={Leaf} label="CO₂ Avoided" value={`${fmt.compact(site.kpi.co2Avoided)} t`} sub="vs. grid baseline" accent="emerald" trend={9.3} />
         </section>
 
